@@ -1,0 +1,20 @@
+.popup__container_type_tooltip {
+  position: relative;
+  margin: auto;
+  padding: 60px 36px 60px;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  max-width: 430px;
+  height: 330px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 767px) {
+  .popup__container_type_tooltip {
+    max-width: 282px;
+    padding: 50px 18px;
+    height: 308px;
+  }
+}

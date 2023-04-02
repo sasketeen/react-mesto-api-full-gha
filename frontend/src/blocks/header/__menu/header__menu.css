@@ -1,0 +1,22 @@
+.header__menu {
+  box-sizing: border-box;
+  display: flex;
+  color: white;
+  gap: 24px;
+  transition: all ease-in-out 0.3s;
+}
+
+@media screen and (max-width: 767px) {
+  .header__menu {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    position: absolute;
+    top: -142px;
+    left: 0;
+    width: 100%;
+    min-height: 142px;
+    border-bottom: 1px #545454 solid;
+  }
+}

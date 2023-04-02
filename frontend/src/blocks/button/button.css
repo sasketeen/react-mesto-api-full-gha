@@ -1,0 +1,20 @@
+.button {
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  background: none;
+  transition: opacity ease-in-out 0.3s;
+  user-select: none;
+}
+@media (hover: hover) {
+  .button:hover {
+    opacity: 0.6;
+  }
+}
+
+.button:focus-visible {
+  box-shadow: 0 0 0 0.2rem goldenrod;
+  outline: none;
+}
+

@@ -1,0 +1,14 @@
+.link_place_header {
+  height: min-content;
+  font-size: 18px;
+  line-height: 22px;
+  margin-top: 6px;
+}
+
+@media screen and (max-width: 767px) {
+  .link_place_header {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+

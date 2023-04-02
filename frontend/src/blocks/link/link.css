@@ -1,0 +1,15 @@
+.link {
+  text-decoration: none;
+  color: white;
+  font-weight: 400;
+  transition: opacity ease-in-out 0.3s;
+}
+
+.link:hover {
+opacity: 0.6;
+}
+
+.link:focus-visible {
+  box-shadow: 0 0 0 0.1rem goldenrod;
+  outline: none;
+}
