@@ -26,7 +26,6 @@ function App() {
   const userReducer = (state, action) => {
     switch (action.type) {
       case "updateAllData": {
-        // console.log(action.data.user);
         return {
           ...action.data,
         };
@@ -52,7 +51,7 @@ function App() {
   /** стейт со всеми данными пользователя */
   const [currentUser, updateCurrentUser] = useReducer(userReducer, {
     name: "Anonimus",
-    about: "Anonimus descriprion",
+    about: "Anonimus description",
     avatar: defaultAvatar,
     email: "avadacedavra@anonimus.wtf",
   });
