@@ -1,4 +1,4 @@
-const serverLink = "https://auth.nomoreparties.co";
+const serverLink = "http://localhost:3001";
 
 /**
  * Функция проверки ответа

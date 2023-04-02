@@ -120,6 +120,14 @@ class Api {
       }).then((response) => this._gotResponse(response, "addLike"));
     }
   }
+
+  /**
+   * функция на добавление актуального токена в headers
+   */
+  addToken() {
+    const token = localStorage.getItem("jwt");
+    this._headers.authorization =`Bearer ${token}`;
+  }
 }
 
 /**

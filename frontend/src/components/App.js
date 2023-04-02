@@ -25,6 +25,12 @@ function App() {
   /** редюсер для обновления стейта пользователя */
   const userReducer = (state, action) => {
     switch (action.type) {
+      case "updateAllData": {
+        // console.log(action.data.user);
+        return {
+          ...action.data,
+        };
+      }
       case "updateUserInfo": {
         return {
           ...action.data,
@@ -78,8 +84,7 @@ function App() {
     signup(formData)
       .then((result) => {
         setIsSuccess(true);
-        //таймаут нужен, чтобы убрать ошибку 429 от сервера Яндекса. Но похоже на костыль
-        setTimeout(handleSignIn, 500, formData);
+        handleSignIn(formData);
       })
       .catch((err) => {
         console.log(err);
@@ -96,6 +101,7 @@ function App() {
     signin(formData)
       .then(({ token }) => {
         localStorage.setItem("jwt", token);
+        api.addToken();
         setIsUserSignIn(true);
         updateCurrentUser({
           type: "updateEmail",
@@ -114,8 +120,8 @@ function App() {
     localStorage.removeItem("jwt");
     setIsUserSignIn(false);
     updateCurrentUser({
-      type: "updateEmail",
-      data: "",
+      type: "updateAllData",
+      data: {}
     });
   };
 
@@ -127,11 +133,11 @@ function App() {
         .then((res) => {
           if (res) {
             setIsUserSignIn(true);
+            api.addToken();
             updateCurrentUser({
               type: "updateEmail",
-              data: res.data.email,
+              data: res.email,
             });
-            //Спасибо, очень полезно и интересно 10 из 10!
             navigate("/react-mesto-auth/", { replace: true });
           }
         })
@@ -144,11 +150,12 @@ function App() {
     if (isUserSignIn) {
       Promise.all([api.getUserInfo(), api.getCards()])
         .then(([userData, cardsData]) => {
+          // console.log(userData)
           updateCurrentUser({
-            type: "updateUserInfo",
+            type: "updateAllData",
             data: userData,
           });
-          setCards(cardsData);
+          setCards(cardsData.reverse()); //reverse нужен чтобы последняя карточка отрисовалась первой
         })
         .catch((err) => console.log(err));
     }
@@ -250,7 +257,7 @@ function App() {
    */
   const handleLikeCard = (targetCard) => {
     const isLiked = targetCard.likes.some(
-      (user) => user._id === currentUser._id
+      (id) => id === currentUser._id
     );
 
     api

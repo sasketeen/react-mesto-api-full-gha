@@ -12,15 +12,12 @@ import PopupWithForm from "../PopupWithForm/PopupWithForm";
  * - isLoading - флаг процесса отправки данных
  */
 export default function AddPlacePopup({ onAddPlace, ...props }) {
-  // const [name, setName] = useState("");
-  // const [link, setLink] = useState("");
   const [handleValidation, errors, validity] = useValidation();
   const {values, setValues, handleChange} = useForm({ name:'', link:'' });
   const buttonText = props.isLoading ? "Сохранение" : "Сохранить";
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(values);
     onAddPlace(values, setValues);
   };
 

@@ -22,6 +22,7 @@ export default function Main({
   onClickLike,
   onClickDelete,
 }) {
+
   //стейт
   const currentUser = useContext(CurrentUserContext);
   const cardsElements = cards.map((card) => {

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const process = require('process');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
+const cors = require('cors');
 const auth = require('./middlewares/auth');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/users');
@@ -10,13 +11,15 @@ const cardRouter = require('./routes/cards');
 const NotFound = require('./errors/NotFound');
 
 // переданное значение порта (по дефолту 3000)
-const { PORT = 3000, LOCALHOST = 'mongodb://localhost:27017/mestodb' } = process.env;
+const { PORT = 3001, LOCALHOST = 'mongodb://localhost:27017/mestodb' } = process.env;
 const app = express();
 
 mongoose.connect(LOCALHOST);
 
 app.use(bodyParser.json()); // для собирания JSON-формата
 app.use(bodyParser.urlencoded({ extended: true })); // для приёма веб-страниц внутри POST-запроса
+
+app.use(cors());
 
 app.use('/', authRouter);
 app.use(auth);
