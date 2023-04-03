@@ -1,5 +1,7 @@
-const serverLink = "api.sasketeen.nomoredomains.monster";
+// const serverLink = "api.sasketeen.nomoredomains.monster";
+import { apiConfig } from "./apiConfig";
 
+const apiLink = apiConfig.serverLink;
 /**
  * Функция проверки ответа
  * @param {Object} response - ответ от сервера
@@ -19,7 +21,7 @@ const gotResponse = (response, functionName) => {
  * @returns {Promise} промис
  */
 export const signup = (formData) => {
-  return fetch(`${serverLink}/signup`, {
+  return fetch(`${apiLink}/signup`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(formData),
@@ -32,7 +34,7 @@ export const signup = (formData) => {
  * @returns {Promise} промис
  */
 export const signin = (formData) => {
-  return fetch(`${serverLink}/signin`, {
+  return fetch(`${apiLink}/signin`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(formData),
@@ -45,7 +47,7 @@ export const signin = (formData) => {
  * @returns {Promise} промис
  */
 export const checkToken = (token) => {
-  return fetch(`${serverLink}/users/me`, {
+  return fetch(`${apiLink}/users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
