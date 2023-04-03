@@ -10,6 +10,6 @@
 
 IP-адрес 84.252.129.221
 
-Frontend http://sasketeen.nomoredomains.monster/sign-up
+Frontend http://sasketeen.nomoredomains.monster
 
-Backend http://api.sasketeen.nomoredomains.monster/sign-up
+Backend http://api.sasketeen.nomoredomains.monster
