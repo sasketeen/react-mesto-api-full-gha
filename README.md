@@ -8,8 +8,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 84.252.129.221
 
-Frontend https://...
+Frontend http://sasketeen.nomoredomains.monster/sign-up
 
-Backend https://...
+Backend http://api.sasketeen.nomoredomains.monster/sign-up
