@@ -12,7 +12,7 @@ const cardRouter = require('./routes/cards');
 const NotFound = require('./errors/NotFound');
 
 // переданное значение порта (по дефолту 3000)
-const { PORT = 3000, LOCALHOST = 'mongodb://localhost:27017/mestodb' } = process.env;
+const { PORT = 3000, LOCALHOST = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 const app = express();
 
 mongoose.connect(LOCALHOST);
