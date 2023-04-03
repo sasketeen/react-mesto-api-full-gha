@@ -137,7 +137,7 @@ function App() {
               type: "updateEmail",
               data: res.email,
             });
-            navigate("/react-mesto-auth/", { replace: true });
+            navigate("/", { replace: true });
           }
         })
         .catch((err) => console.log(err));
