@@ -106,7 +106,7 @@ function App() {
           type: "updateEmail",
           data: formData.email,
         });
-        navigate("/react-mesto-auth/");
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
@@ -318,7 +318,7 @@ function App() {
         <Header handleSignOut={handleSignOut} />
         <Routes>
           <Route
-            path="react-mesto-auth/"
+            path="/"
             element={
               <>
                 <ProtectedRoute
@@ -371,11 +371,11 @@ function App() {
             }
           />
           <Route
-            path="react-mesto-auth/sign-up"
+            path="sign-up"
             element={<Register handleSignUp={handleSignUp} />}
           />
           <Route
-            path="react-mesto-auth/sign-in"
+            path="sign-in"
             element={<Login handleSignIn={handleSignIn} />}
           />
         </Routes>
