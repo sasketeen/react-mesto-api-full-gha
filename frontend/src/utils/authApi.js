@@ -1,4 +1,4 @@
-const serverLink = "http://localhost:3001";
+const serverLink = "api.sasketeen.nomoredomains.monster";
 
 /**
  * Функция проверки ответа
