@@ -17,7 +17,7 @@ export default function Register({ handleSignUp }) {
         />
         <p className="auth__sublink">
           Уже зарегистрированы?{" "}
-          <Link to={"/react-mesto-auth/sign-in"} className={"link"}>
+          <Link to={"/sign-in"} className={"link"}>
             Войти
           </Link>
         </p>
