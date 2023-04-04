@@ -51,7 +51,7 @@ module.exports.login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       // После ревью сгенерировать новый ключ и перенести его в .ENV
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '1d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'secret-key', { expiresIn: '1d' });
       res.send({ token });
     })
     .catch((err) => next(err));
