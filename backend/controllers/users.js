@@ -6,6 +6,7 @@ const InternalServerError = require('../errors/InternalServerError');
 const NotFound = require('../errors/NotFound');
 const ConflictingRequest = require('../errors/ConflictingRequest');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
 // const Unauthorized = require('../errors/Unauthorized');
 
 /** получение массива всех пользователей */
@@ -50,7 +51,7 @@ module.exports.login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       // После ревью сгенерировать новый ключ и перенести его в .ENV
-      const token = jwt.sign({ _id: user._id }, '0828c9036904226796ec7b3d4bfd79eafe5e285841b3a080b5380d808490be0a', { expiresIn: '1d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '1d' });
       res.send({ token });
     })
     .catch((err) => next(err));
