@@ -1,61 +1,50 @@
+const { Mongoose } = require('mongoose');
 const Card = require('../models/card');
 const BadRequest = require('../errors/BadRequest');
-const InternalServerError = require('../errors/InternalServerError');
 const NotFound = require('../errors/NotFound');
 const Forbidden = require('../errors/Forbidden');
 
 /** получение карточек */
 module.exports.getCards = (req, res, next) => {
   Card.find({})
-    .then((cards) => res.send(cards))
-    .catch(() => next(new InternalServerError()));
+    .populate(['owner', 'likes'])
+    .catch((err) => next(err));
 };
 
 /** создание карточки */
 module.exports.postCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
-    .then((card) => res.send(card))
+    .then((card) => {
+      card
+        .populate('owner')
+        .then(() => res.status(201).send(card))
+        .catch(next);
+    })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err instanceof Mongoose.Error.ValidationError) {
         next(new BadRequest('Переданы некорректные данные при создании карточки'));
         return;
       }
-      next(new InternalServerError());
+      next(err);
     });
-};
-
-/** middleware проверки существования карточки */
-module.exports.doesCardExist = (req, res, next) => {
-  Card.findById(req.params.cardId)
-    .then((card) => {
-      if (card) {
-        // https://qna.habr.com/q/1153588
-        req.locals = {
-          card,
-        };
-        next();
-        return;
-      }
-      next(new NotFound('Карточка с указанным id не найдена'));
-    })
-    .catch(() => next(new InternalServerError()));
 };
 
 /** удаление карточки */
 module.exports.deleteCard = (req, res, next) => {
-  const { card } = req.locals;
-  if (`${card.owner}` !== req.user._id) {
-    next(new Forbidden());
-    return;
-  }
-  card
-    .deleteOne()
-    .then(() => res.send({ data: card }))
-    .catch(() => next(new InternalServerError()));
+  Card.findById(req.params.cardId)
+    .then((card) => {
+      if (!card) throw new NotFound('Данные по указанному id не найдены');
+      if (`${card.owner}` !== req.user._id) {
+        next(new Forbidden('Доступ запрещен'));
+      }
+      card
+        .deleteOne()
+        .then(() => res.send({ data: card }))
+        .catch((err) => next(err));
+    })
+    .catch((err) => next(err));
 };
-
-// TODO переписать контролеры с использованием req.locals
 
 /** добавления лайка карточке */
 module.exports.likeCard = (req, res, next) => {
@@ -64,8 +53,12 @@ module.exports.likeCard = (req, res, next) => {
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
-    .then((card) => res.send(card))
-    .catch(() => next(new InternalServerError()));
+    .populate(['owner', 'likes'])
+    .then((card) => {
+      if (!card) throw new NotFound('Данные по указанному id не найдены');
+      res.send(card);
+    })
+    .catch((err) => next(err));
 };
 
 /** удаления лайка у карточки */
@@ -75,6 +68,10 @@ module.exports.dislikeCard = (req, res, next) => {
     { $pull: { likes: req.user._id } },
     { new: true },
   )
-    .then((card) => res.send(card))
-    .catch(() => next(new InternalServerError()));
+    .populate(['owner', 'likes'])
+    .then((card) => {
+      if (!card) throw new NotFound('Данные по указанному id не найдены');
+      res.send(card);
+    })
+    .catch((err) => next(err));
 };

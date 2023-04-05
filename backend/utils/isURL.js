@@ -1,1 +1,7 @@
-module.exports.isURL = (link) => /https?:\/\/(www\.)?([-\w]+)(\.[a-zA-Z.]+)([-\w()@:%_+.~#?&//=]+)/gi.test(link);
+const urlRegExp = /https?:\/\/(www\.)?([-\w]+)(\.[a-zA-Z.]+)([-\w()@:%_+.~#?&//=]+)/;
+const isURL = (link) => urlRegExp.test(link);
+
+module.exports = {
+  isURL,
+  urlRegExp,
+};

@@ -1,6 +1,8 @@
 const { celebrate, Joi } = require('celebrate');
 const router = require('express').Router();
 
+const { urlRegExp } = require('../utils/isURL');
+
 const {
   getMe, getUserInfo, getUsers, editUserInfo, editAvatar,
 } = require('../controllers/users');
@@ -21,7 +23,7 @@ router.patch('/me/avatar', celebrate({
     avatar: Joi
       .string()
       .required()
-      .uri(({ scheme: ['http', 'https'] })),
+      .pattern(urlRegExp),
   }),
 }), editAvatar);
 
@@ -31,6 +33,10 @@ router.use('/:userId', celebrate({
   }),
 }), doesUserExist);
 
-router.get('/:userId', getUserInfo);
+router.get('/:userId', celebrate({
+  params: Joi.object().keys({
+    userId: Joi.string().required().length(24).hex(),
+  }),
+}), getUserInfo);
 
 module.exports = router;
