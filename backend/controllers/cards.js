@@ -1,4 +1,4 @@
-const { Mongoose } = require('mongoose');
+const { mongoose } = require('mongoose');
 const Card = require('../models/card');
 const BadRequest = require('../errors/BadRequest');
 const NotFound = require('../errors/NotFound');
@@ -22,7 +22,7 @@ module.exports.postCard = (req, res, next) => {
         .catch(next);
     })
     .catch((err) => {
-      if (err instanceof Mongoose.Error.ValidationError) {
+      if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequest('Переданы некорректные данные при создании карточки'));
         return;
       }

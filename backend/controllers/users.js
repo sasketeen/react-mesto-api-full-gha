@@ -1,7 +1,6 @@
-const { Mongoose } = require('mongoose');
-
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { mongoose } = require('mongoose');
 const User = require('../models/user');
 const BadRequest = require('../errors/BadRequest');
 const NotFound = require('../errors/NotFound');
@@ -32,7 +31,7 @@ module.exports.createUser = (req, res, next) => {
       res.send(newUser);
     })
     .catch((err) => {
-      if (err instanceof Mongoose.Error.ValidationError) {
+      if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequest('Переданы некорректные данные при создании пользователя'));
         return;
       }
@@ -79,7 +78,7 @@ module.exports.getUserInfo = (req, res, next) => {
       res.send(user);
     })
     .catch((err) => {
-      if (err instanceof Mongoose.Error.CastError) next(new BadRequest('Неверные параметры запроса'));
+      if (err instanceof mongoose.Error.CastError) next(new BadRequest('Неверные параметры запроса'));
       next(err);
     });
 };
@@ -90,7 +89,7 @@ module.exports.editUserInfo = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err instanceof Mongoose.Error.ValidationError) {
+      if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequest('Переданы некорректные данные при обновлении профиля'));
         return;
       }
@@ -104,7 +103,7 @@ module.exports.editAvatar = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err instanceof Mongoose.Error.ValidationError) {
+      if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequest('Переданы некорректные данные при обновлении аватара'));
         return;
       }
