@@ -44,7 +44,10 @@ module.exports.deleteCard = (req, res, next) => {
         .then(() => res.send({ data: card }))
         .catch((err) => next(err));
     })
-    .catch((err) => next(err));
+    .catch((err) => {
+      if (err instanceof mongoose.Error.CastError) next(new BadRequest('Неверные параметры запроса'));
+      next(err);
+    });
 };
 
 /** добавления лайка карточке */
@@ -59,7 +62,10 @@ module.exports.likeCard = (req, res, next) => {
       if (!card) throw new NotFound('Данные по указанному id не найдены');
       res.send(card);
     })
-    .catch((err) => next(err));
+    .catch((err) => {
+      if (err instanceof mongoose.Error.CastError) next(new BadRequest('Неверные параметры запроса'));
+      next(err);
+    });
 };
 
 /** удаления лайка у карточки */
@@ -74,5 +80,8 @@ module.exports.dislikeCard = (req, res, next) => {
       if (!card) throw new NotFound('Данные по указанному id не найдены');
       res.send(card);
     })
-    .catch((err) => next(err));
+    .catch((err) => {
+      if (err instanceof mongoose.Error.CastError) next(new BadRequest('Неверные параметры запроса'));
+      next(err);
+    });
 };
