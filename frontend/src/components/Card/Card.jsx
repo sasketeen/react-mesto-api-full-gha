@@ -17,7 +17,7 @@ export default function Card({
 }) {
   const currentUser = useContext(CurrentUserContext);
   const isOwn = card.owner._id === currentUser._id;
-  const isLiked = card.likes.some((id) => id === currentUser._id);
+  const isLiked = card.likes.some((user) => user._id === currentUser._id);
 
   /**
    * колбек при клике на картинку
