@@ -16,7 +16,7 @@ export default function Card({
   onClickDelete,
 }) {
   const currentUser = useContext(CurrentUserContext);
-  const isOwn = card.owner === currentUser._id;
+  const isOwn = card.owner._id === currentUser._id;
   const isLiked = card.likes.some((id) => id === currentUser._id);
 
   /**
